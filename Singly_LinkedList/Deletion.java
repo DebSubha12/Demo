@@ -54,28 +54,69 @@ public class Deletion {
 
         return head;
     }
+ static Node deleteParticularNode(Node head, int x) {
+
+    // Case 1: empty list
+    if (head == null) return null;
+
+    // Case 2: delete first node
+    if (x == 1) {
+        return head.next;
+    }
+
+    x--;
+    Node curr = head;
+    Node prev = null;
+
+    // Traverse safely
+    while (x-- > 0 && curr != null) {
+        prev = curr;
+        curr = curr.next;
+    }
+
+    // Case 3: x is out of bounds
+    if (curr == null) return head;
+
+    // Delete node
+    prev.next = curr.next;
+
+    return head;
+}
+   
 
     // Print list
-    static void printList(Node head) {
-        Node temp = head;
-        while (temp != null) {
-            System.out.print(temp.data + " ");
-            temp = temp.next;
-        }
+   static void printList(Node head) {
+    Node temp = head;
+    while (temp != null) {
+        System.out.print(temp.data + " ");
+        temp = temp.next;
     }
+    System.out.println(" "); // ensures next output starts on new line
+}
 
     public static void main(String[] args) {
 
-        int arr[] = { 2, 4, 6, 8, 10 };
+    int arr[] = { 2, 4, 6, 8, 10, 20, 30, 35, 50 };
 
-        Node head = createLinkedList(arr, 0, arr.length);
+    Node head = createLinkedList(arr, 0, arr.length);
 
-        // Call delete method
-        head = deleteFirst(head);
+    System.out.print("Original List: ");
+    printList(head);
 
-        head = deleteLast(head);
+    // Delete first node
+    head = deleteFirst(head);
+    System.out.print("After Deleting First Node: ");
+    printList(head);
 
-        // Print updated list
-        printList(head);
-    }
+    // Delete last node
+    head = deleteLast(head);
+    System.out.print("After Deleting Last Node: ");
+    printList(head);
+
+    // Delete particular node (position x)
+    int x = 3;
+    head = deleteParticularNode(head, x);
+    System.out.print("After Deleting " + x + "rd Node: ");
+    printList(head);
+}
 }
